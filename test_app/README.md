@@ -7,8 +7,8 @@ A Flutter app that displays a list of users, allows adding users, and shows tren
 ### User List Screen
 
 - Fetches and displays a **paginated list of users** from [ReqRes API](https://reqres.in/api/users?page={page}).
-- Shows **first name, last name, and avatar image**.
-- Implements **pagination** to load more users as the user scrolls.
+- Shows **name,email and avatar image**.
+- Implements **pagination** to load more users as the user scrolls and it is limited to 2 pages.
 - Clicking a user navigates to the **Movie List Screen**.
 
 ### Add User Functionality
@@ -24,20 +24,20 @@ A Flutter app that displays a list of users, allows adding users, and shows tren
 ### Movie List Screen
 
 - Fetches and displays a **paginated list of trending movies** from [TMDB API](https://api.themoviedb.org/3/trending/movie/day?language=en-US\&page={page}\&api_key=YOUR_API_KEY).
-- Displays **movie poster, title, and release date**.
+- Displays **movie poster, title, and rating**.
 - Implements **infinite scroll pagination**.
 - Clicking a movie navigates to the **Movie Detail Screen**.
 
 ### Movie Detail Screen
 
 - Fetches **detailed movie info** from [TMDB API](https://api.themoviedb.org/3/movie/{movie_id}?api_key=YOUR_API_KEY).
-- Displays **title, description, release date, and poster image**.
+- Displays **title, description, rating, and poster image**.
 
 ---
 
 ## Architecture & Best Practices
 
-This project follows **clean architecture principles** and uses **Riverpod** for state management.
+This project follows **MVC architecture principles** and uses **Riverpod** for state management.
 
 ### Technologies Used
 
@@ -85,6 +85,12 @@ cd test-app
 
 ```sh
 flutter pub get
+
+cd android
+
+./gradlew
+
+cd..
 ```
 
 ### Run the App
