@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:test_app/widgets/snack_bar.dart';
 
 import '../../data/models/user_list_model.dart';
 import '../../data/providers/user_provider.dart';
+import '../../services/network_service.dart';
+import '../../services/work_manager_service.dart';
+import '../../widgets/snack_bar.dart';
 
 class UserListScreen extends ConsumerStatefulWidget {
   const UserListScreen({super.key});
@@ -43,12 +45,27 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isConnected =
+        ref.watch(connectivityServiceProvider).isConnectedSync();
     final userListAsync = ref.watch(userListProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('User List')),
       body: Column(
         children: [
+          if (!isConnected)
+            Container(
+              width: double.infinity,
+              color: Colors.red,
+              padding: const EdgeInsets.all(10),
+              child: const Center(
+                child: Text(
+                  "No Internet Connection",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
           Expanded(
             child: userListAsync.when(
               loading: () => _buildLoadingState(ref),
@@ -60,6 +77,7 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          WorkManagerService.initialize();
           context.go("/add_user");
         },
         child: const Icon(Icons.add),

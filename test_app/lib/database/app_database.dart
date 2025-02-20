@@ -36,7 +36,6 @@ class AppDatabase extends _$AppDatabase {
         id: Value(newId),
         isSynced: const Value(true),
       ),
-
     );
   }
 }

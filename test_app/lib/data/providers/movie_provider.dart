@@ -6,11 +6,6 @@ import '../../services/network_service.dart';
 import '../models/movie_details_model.dart';
 import '../models/movie_list_model.dart';
 
-final apiServiceProvider = Provider<ApiService>((ref) {
-  final connectivityService = ref.read(connectivityServiceProvider);
-  return ApiService(connectivityService);
-});
-
 final moviesListProvider =
     StateNotifierProvider<MoviesListNotifier, AsyncValue<List<Result>>>((ref) {
   final apiService = ref.read(apiServiceProvider);

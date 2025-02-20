@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../data/providers/movie_provider.dart';
+import '../../../services/network_service.dart';
 import '../../../utils/constants.dart';
 
 class MovieDetailsScreen extends ConsumerStatefulWidget {
@@ -34,6 +35,8 @@ class _MovieDetailsScreenState extends ConsumerState<MovieDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final movieDetails = ref.watch(moviesDetailsProvider);
+    final isConnected =
+        ref.watch(connectivityServiceProvider).isConnectedSync();
 
     return PopScope(
       canPop: false, // Prevents default back navigation
@@ -52,6 +55,19 @@ class _MovieDetailsScreenState extends ConsumerState<MovieDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (!isConnected)
+                  Container(
+                    width: double.infinity,
+                    color: Colors.red,
+                    padding: const EdgeInsets.all(10),
+                    child: const Center(
+                      child: Text(
+                        "No Internet Connection",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
                 Text(movie.title,
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold)),
