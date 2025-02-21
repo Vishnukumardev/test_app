@@ -88,7 +88,7 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
   Widget _buildLoadingState(WidgetRef ref) {
     final previousUsers = ref.read(userListProvider).asData?.value ?? [];
     if (previousUsers.isNotEmpty) {
-      return _buildUserList(ref, previousUsers); // Show cached users
+      return _buildUserList(ref, previousUsers);
     }
     return const Center(child: CircularProgressIndicator());
   }
@@ -119,7 +119,7 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
 
     return ListView.builder(
       controller: _scrollController,
-      itemCount: users.length + 1, // Extra item for loader
+      itemCount: users.length + 1,
       itemBuilder: (context, index) {
         if (index < users.length) {
           final Data user = users[index];
@@ -138,11 +138,11 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
           return const Center(
             child: Padding(
               padding: EdgeInsets.all(8.0),
-              child: CircularProgressIndicator(), // Show loader at bottom
+              child: CircularProgressIndicator(),
             ),
           );
         } else {
-          return const SizedBox.shrink(); // No more items
+          return const SizedBox.shrink();
         }
       },
     );

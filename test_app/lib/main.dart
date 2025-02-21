@@ -16,14 +16,12 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Run in a separate thread using Future.microtask
     Future.microtask(() {
       ref
           .read(connectivityServiceProvider)
           .onConnectivityChanged
           .listen((status) {
-        print(
-            "Network Status (Background Task): $status"); // Print connectivity changes
+        print("Network Status (Background Task): $status");
       });
     });
 

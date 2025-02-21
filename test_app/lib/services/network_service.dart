@@ -9,11 +9,10 @@ final connectivityServiceProvider =
 class ConnectivityService {
   final Connectivity _connectivity = Connectivity();
   final StreamController<bool> _connectionStreamController =
-      StreamController<bool>.broadcast(); // Allows multiple listeners
+      StreamController<bool>.broadcast();
 
-  late StreamSubscription<List<ConnectivityResult>>
-      _subscription; // Handles list of results
-  bool _isConnected = true; // Default to true
+  late StreamSubscription<List<ConnectivityResult>> _subscription;
+  bool _isConnected = true;
 
   ConnectivityService() {
     _startMonitoring();
@@ -22,7 +21,6 @@ class ConnectivityService {
   void _startMonitoring() {
     _checkInitialConnectivity();
 
-    // Monitor connectivity changes (handles a List<ConnectivityResult>)
     _subscription = _connectivity.onConnectivityChanged.listen((results) {
       bool isConnected =
           results.any((result) => result != ConnectivityResult.none);
@@ -30,15 +28,13 @@ class ConnectivityService {
       if (_isConnected != isConnected) {
         _isConnected = isConnected;
         _connectionStreamController.add(isConnected);
-        print("Connectivity Changed: $results"); // Logs the full list
+        print("Connectivity Changed: $results");
       }
     });
   }
 
-  // Expose a stream for UI updates
   Stream<bool> get onConnectivityChanged => _connectionStreamController.stream;
 
-  // Initial connectivity check
   Future<void> _checkInitialConnectivity() async {
     final results = await _connectivity.checkConnectivity();
     bool isConnected =
@@ -48,16 +44,13 @@ class ConnectivityService {
     print("Initial Connectivity: $results");
   }
 
-  // Manual connectivity check
   Future<bool> isConnected() async {
     final results = await _connectivity.checkConnectivity();
     return results.any((result) => result != ConnectivityResult.none);
   }
 
-  // Synchronous method for UI updates
   bool isConnectedSync() => _isConnected;
 
-  // Dispose to clean up resources
   void dispose() {
     _subscription.cancel();
     _connectionStreamController.close();

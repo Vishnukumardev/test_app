@@ -22,12 +22,12 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<Data>>> {
   bool _isFetching = false;
 
   UserListNotifier(this._apiService) : super(const AsyncValue.loading()) {
-    _fetchInitialUsers(); // Fetch twice initially
+    _fetchInitialUsers();
   }
 
   Future<void> _fetchInitialUsers() async {
-    await fetchUsers(initial: true); // First fetch
-    await fetchUsers(initial: false); // Second fetch
+    await fetchUsers(initial: true);
+    await fetchUsers(initial: false);
   }
 
   Future<void> fetchUsers({bool initial = false}) async {
@@ -45,7 +45,6 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<Data>>> {
       } else {
         state = AsyncValue.data([...state.value ?? [], ...userList]);
 
-        // Increment page
         _page++;
       }
     } catch (e) {
@@ -60,7 +59,7 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<Data>>> {
     hasMore = true;
     state = const AsyncValue.loading();
     await fetchUsers(initial: true);
-    await fetchUsers(initial: false); // Ensure two initial fetches
+    await fetchUsers(initial: false);
   }
 }
 
@@ -103,13 +102,12 @@ class AddUserNotifier extends StateNotifier<AsyncValue<User?>> {
       final newUser = UsersCompanion(
         name: Value(name),
         job: Value(job),
-        isSynced: const Value(false), // Mark as unsynced
+        isSynced: const Value(false),
       );
 
       await _database.insertUser(newUser);
-      WorkManagerService
-          .registerSyncTask(); // Schedule WorkManager to sync later
-      state = AsyncValue.data(null); // Indicate that user is saved locally
+      WorkManagerService.registerSyncTask();
+      state = AsyncValue.data(null);
     }
   }
 }

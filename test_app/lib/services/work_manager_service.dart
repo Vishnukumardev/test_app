@@ -13,7 +13,7 @@ class WorkManagerService {
   static Future<void> initialize() async {
     Workmanager().initialize(
       _callbackDispatcher,
-      isInDebugMode: true, // Set to false in production
+      isInDebugMode: true,
     );
   }
 
@@ -22,7 +22,7 @@ class WorkManagerService {
       "sync_users_task",
       syncTask,
       constraints: Constraints(
-        networkType: NetworkType.connected, // Only run when connected
+        networkType: NetworkType.connected,
       ),
     );
   }
@@ -40,7 +40,7 @@ class WorkManagerService {
         await _syncOfflineUsers(database, apiService);
       }
 
-      container.dispose(); // Dispose of the container after execution
+      container.dispose();
       return Future.value(true);
     });
   }

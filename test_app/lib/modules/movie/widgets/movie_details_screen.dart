@@ -28,8 +28,8 @@ class _MovieDetailsScreenState extends ConsumerState<MovieDetailsScreen> {
   }
 
   Future<bool> _onWillPop() async {
-    context.go('/movies'); // Navigate back to UserListScreen
-    return false; // Prevent default back navigation
+    context.go('/movies');
+    return false;
   }
 
   @override
@@ -39,10 +39,10 @@ class _MovieDetailsScreenState extends ConsumerState<MovieDetailsScreen> {
         ref.watch(connectivityServiceProvider).isConnectedSync();
 
     return PopScope(
-      canPop: false, // Prevents default back navigation
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          context.go('/movies'); // Navigate to UserListScreen
+          context.go('/movies');
         }
       },
       child: Scaffold(

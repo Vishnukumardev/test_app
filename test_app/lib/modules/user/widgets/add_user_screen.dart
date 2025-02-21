@@ -44,7 +44,7 @@ class AddUserScreen extends ConsumerWidget {
                   await ref
                       .read(userListProvider.notifier)
                       .fetchUsers(initial: false);
-                  context.go("/users"); // Navigate to Users screen
+                  context.go("/users");
                 },
                 child: const Text("OK"),
               ),
@@ -55,10 +55,10 @@ class AddUserScreen extends ConsumerWidget {
     }
 
     return PopScope(
-      canPop: false, // Prevents default back navigation
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          context.go('/users'); // Navigate to UserListScreen
+          context.go('/users');
         }
       },
       child: Scaffold(

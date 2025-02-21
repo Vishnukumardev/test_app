@@ -15,11 +15,9 @@ class ApiService {
 
   ApiService(this._connectivityService);
 
-  // Helper function for GET requests
   Future<Map<String, dynamic>> get(String endpoint,
       {Map<String, String>? headers}) async {
     try {
-      // Check internet before making request
       bool isConnected = await _connectivityService.isConnected();
       if (!isConnected) {
         throw Exception("No Internet Connection");
@@ -35,11 +33,9 @@ class ApiService {
     }
   }
 
-  // Helper function for POST requests
   Future<dynamic> post(String endpoint,
       {Map<String, String>? headers, dynamic body}) async {
     try {
-      // Check internet before making request
       bool isConnected = await _connectivityService.isConnected();
       if (!isConnected) {
         throw Exception("No Internet Connection");
@@ -56,13 +52,11 @@ class ApiService {
     }
   }
 
-  // Default headers for requests
   Map<String, String> _defaultHeaders() => {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       };
 
-  // Handle the HTTP response
   dynamic _handleResponse(http.Response response) {
     print('Response Status Code: ${response.statusCode}');
     print('Response Body: ${response.body}');
@@ -88,7 +82,6 @@ class ApiService {
     }
   }
 
-  // Handle errors and check for connectivity
   dynamic _handleError(dynamic error) {
     print('Error Occurred: $error');
 

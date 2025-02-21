@@ -43,7 +43,7 @@ class MoviesListNotifier extends StateNotifier<AsyncValue<List<Result>>> {
 
     if (initial) {
       state = const AsyncValue.loading();
-      _page = 1; // Reset pagination when fetching initially
+      _page = 1;
       hasMore = true;
     }
 
@@ -56,7 +56,7 @@ class MoviesListNotifier extends StateNotifier<AsyncValue<List<Result>>> {
 
       hasMore = movieList.isNotEmpty;
       state = AsyncValue.data(
-          [...(initial ? [] : state.value ?? []), ...movieList]); // Append
+          [...(initial ? [] : state.value ?? []), ...movieList]);
 
       _page++;
     } catch (e, stackTrace) {
@@ -88,7 +88,6 @@ class MovieDetailsNotifier
       return;
     }
 
-    // Set Loading state before making API call
     state = const AsyncValue.loading();
     print("$getMovieDetailsEndpoint$id?api_key=$movie_api_key");
     try {

@@ -24,7 +24,6 @@ class _MoviesListScreenState extends ConsumerState<MoviesListScreen> {
     super.initState();
     _scrollController.addListener(_onScroll);
 
-    // Listen to connectivity changes
     ref
         .read(connectivityServiceProvider)
         .onConnectivityChanged
@@ -38,7 +37,6 @@ class _MoviesListScreenState extends ConsumerState<MoviesListScreen> {
       }
     });
 
-    // Initial fetch with connectivity check
     Future.microtask(() async {
       final currentStatus =
           await ref.read(connectivityServiceProvider).isConnected();
@@ -79,10 +77,10 @@ class _MoviesListScreenState extends ConsumerState<MoviesListScreen> {
     print("Connection Status : ${isConnected}");
 
     return PopScope(
-      canPop: false, // Prevents default back navigation
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          context.go('/users'); // Navigate to UserListScreen
+          context.go('/users');
         }
       },
       child: Scaffold(
